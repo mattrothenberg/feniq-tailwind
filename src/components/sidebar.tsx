@@ -12,6 +12,8 @@ import { FilterAccordionPanel } from "./filter-accordion-panel";
 import { InputGroup } from "./input-group";
 import { Input } from "./input";
 import { Badge } from "./badge";
+import { Select } from "./select";
+import { BOOLEAN_SELECT_OPTIONS } from "../lib";
 
 export function Sidebar() {
   return (
@@ -50,16 +52,25 @@ export function Sidebar() {
               Building Information
             </FilterAccordionButton>
             <FilterAccordionPanel>
-              <InputGroup
-                id="street-address"
-                label="Street Address"
-                description="You enter the address, duh"
-              >
-                <Input
+              <div className="space-y-4">
+                <InputGroup
                   id="street-address"
-                  placeholder="Enter street address"
-                ></Input>
-              </InputGroup>
+                  label="Street Address"
+                  description="You enter the address, duh"
+                >
+                  <Input
+                    id="street-address"
+                    placeholder="Enter street address"
+                  ></Input>
+                </InputGroup>
+                <InputGroup
+                  id="landmarked"
+                  label="Landmarked"
+                  description="Is the building landmarked?"
+                >
+                  <Select items={BOOLEAN_SELECT_OPTIONS} />
+                </InputGroup>
+              </div>
             </FilterAccordionPanel>
           </AccordionItem>
           <AccordionItem>
