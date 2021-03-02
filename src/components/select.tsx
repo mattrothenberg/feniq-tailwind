@@ -91,15 +91,15 @@ export const Select: React.FC<SelectProps> = ({ items, ...rest }) => {
             {...getMenuProps()}
           >
             {items.map((item, index) => {
+              const isHighlighted = highlightedIndex === index;
+              const isSelected = selectedItem?.value === item.value;
               return (
                 <li
                   className={cc([
                     "cursor-default select-none relative py-2 pl-3 pr-9 text-sm",
                     {
-                      "text-white bg-indigo-600": highlightedIndex === index,
-                      "text-gray-900":
-                        highlightedIndex !== index &&
-                        selectedItem?.value !== item.value,
+                      "text-white bg-indigo-600": isHighlighted,
+                      "text-gray-900": !isHighlighted && !isSelected,
                     },
                   ])}
                   key={`${item}${index}`}
@@ -109,8 +109,8 @@ export const Select: React.FC<SelectProps> = ({ items, ...rest }) => {
                     className={cc([
                       "block truncate",
                       {
-                        "font-normal": selectedItem?.value !== item.value,
-                        "font-semibold": selectedItem?.value === item.value,
+                        "font-normal": !isSelected,
+                        "font-semibold": isSelected,
                       },
                     ])}
                   >
@@ -122,8 +122,8 @@ export const Select: React.FC<SelectProps> = ({ items, ...rest }) => {
                       className={cc([
                         "absolute inset-y-0 right-0 flex items-center pr-4",
                         {
-                          "text-indigo-600": highlightedIndex !== index,
-                          "text-white": highlightedIndex === index,
+                          "text-indigo-600": !isHighlighted,
+                          "text-white": isHighlighted,
                         },
                       ])}
                     >
