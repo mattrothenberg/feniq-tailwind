@@ -13,16 +13,29 @@ import { InputGroup } from "./input-group";
 import { Input } from "./input";
 import { Badge } from "./badge";
 import { Select, Option } from "./select";
-import { BOOLEAN_SELECT_OPTIONS } from "../lib";
+import { BOOLEAN_SELECT_OPTIONS, BOROUGH_SELECT_OPTIONS } from "../lib";
+import { Multiselect } from "./multiselect";
 
 export function Sidebar() {
   const [selected, setSelected] = React.useState<Option | null>(null);
+  const [selectedBoroughs, setSelectedBoroughs] = React.useState<
+    Option[] | undefined
+  >([]);
 
   const handleSelectedItemChange = (option: Option | null | undefined) => {
     if (option) {
       setSelected(option);
     } else {
       setSelected(null);
+    }
+  };
+
+  const handleBoroughChange = (boroughs: Option[] | null | undefined) => {
+    console.log("made it");
+    if (boroughs) {
+      setSelectedBoroughs(boroughs);
+    } else {
+      setSelectedBoroughs([]);
     }
   };
 
@@ -84,6 +97,19 @@ export function Sidebar() {
                       handleSelectedItemChange(changes.selectedItem)
                     }
                     items={BOOLEAN_SELECT_OPTIONS}
+                  />
+                </InputGroup>
+                <InputGroup
+                  id="borough"
+                  label="Borough"
+                  description="What borough is the property in?"
+                >
+                  <Multiselect
+                    selectedItems={selectedBoroughs}
+                    onSelectedItemsChange={(changes) => {
+                      handleBoroughChange(changes.selectedItems);
+                    }}
+                    items={BOROUGH_SELECT_OPTIONS}
                   />
                 </InputGroup>
               </div>

@@ -94,7 +94,7 @@ export const Select: React.FC<SelectProps> = ({ items, ...rest }) => {
       )}
       <div
         className={cc([
-          "w-full",
+          "w-full bg-white z-10",
           {
             "sr-only": !isOpen,
           },
