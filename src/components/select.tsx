@@ -1,11 +1,15 @@
 import React from "react";
 import { useSelect, UseSelectProps } from "downshift";
-import { RiArrowUpDownFill, RiCheckFill } from "react-icons/ri";
+import {
+  RiArrowUpDownFill,
+  RiCheckFill,
+  RiCloseCircleFill,
+} from "react-icons/ri";
 import { usePopper } from "react-popper";
 
 import cc from "classcat";
 
-interface Option {
+export interface Option {
   label: string;
   value: string | boolean | number;
 }
@@ -45,11 +49,16 @@ export const Select: React.FC<SelectProps> = ({ items, ...rest }) => {
     getMenuProps,
     highlightedIndex,
     getItemProps,
+    reset,
   } = useSelect({
     items,
     itemToString: (item) => (item ? item.label : ""),
     ...rest,
   });
+
+  const handleClear = () => {
+    reset();
+  };
 
   // Popper has the wrong position on mount, this hack seems to fix it...
   React.useEffect(() => {
@@ -61,7 +70,7 @@ export const Select: React.FC<SelectProps> = ({ items, ...rest }) => {
   return (
     <div className="relative" ref={setReferenceElement}>
       <button
-        className="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        className="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm z-0"
         type="button"
         {...getToggleButtonProps()}
       >
@@ -70,10 +79,19 @@ export const Select: React.FC<SelectProps> = ({ items, ...rest }) => {
             <span className="text-gray-500">Select option</span>
           )}
         </span>
-        <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
-          <RiArrowUpDownFill className="h-5 w-5 text-gray-400" />
-        </span>
+        {!selectedItem && (
+          <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+            <RiArrowUpDownFill className="h-5 w-5 text-gray-400" />
+          </span>
+        )}
       </button>
+      {selectedItem && (
+        <div className="absolute inset-y-0 right-0 flex items-center pr-2 z-10">
+          <button onClick={handleClear}>
+            <RiCloseCircleFill className="h-5 w-5 text-gray-400" />
+          </button>
+        </div>
+      )}
       <div
         className={cc([
           "w-full",

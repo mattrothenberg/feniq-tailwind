@@ -12,10 +12,20 @@ import { FilterAccordionPanel } from "./filter-accordion-panel";
 import { InputGroup } from "./input-group";
 import { Input } from "./input";
 import { Badge } from "./badge";
-import { Select } from "./select";
+import { Select, Option } from "./select";
 import { BOOLEAN_SELECT_OPTIONS } from "../lib";
 
 export function Sidebar() {
+  const [selected, setSelected] = React.useState<Option | null>(null);
+
+  const handleSelectedItemChange = (option: Option | null | undefined) => {
+    if (option) {
+      setSelected(option);
+    } else {
+      setSelected(null);
+    }
+  };
+
   return (
     <aside className="w-80 flex-shrink-0 bg-white border-r border-gray-200 overflow-auto">
       <div className="p-4 border-b border-gray-100">
@@ -68,7 +78,13 @@ export function Sidebar() {
                   label="Landmarked"
                   description="Is the building landmarked?"
                 >
-                  <Select items={BOOLEAN_SELECT_OPTIONS} />
+                  <Select
+                    selectedItem={selected}
+                    onSelectedItemChange={(changes) =>
+                      handleSelectedItemChange(changes.selectedItem)
+                    }
+                    items={BOOLEAN_SELECT_OPTIONS}
+                  />
                 </InputGroup>
               </div>
             </FilterAccordionPanel>
