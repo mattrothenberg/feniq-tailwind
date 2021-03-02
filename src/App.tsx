@@ -7,7 +7,7 @@ import {
   useAccordionItemContext,
 } from "@reach/accordion";
 import "@reach/accordion/styles.css";
-import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+import { FiChevronDown, FiChevronUp, FiInfo } from "react-icons/fi";
 import {
   RiBuilding4Fill,
   RiFolderUserFill,
@@ -15,6 +15,7 @@ import {
   RiCalendarTodoFill,
 } from "react-icons/ri";
 import { Input as ReakitInput, InputProps } from "reakit/Input";
+import { Button } from "reakit/Button";
 
 function Header() {
   return (
@@ -73,7 +74,7 @@ const FilterGroup: React.FC<FilterGroupProps> = ({ label, children }) => {
 
 const FilterAccordionPanel: React.FC = ({ children }) => {
   return (
-    <AccordionPanel className="p-4 focus:outline-none">
+    <AccordionPanel className="px-4 pb-4 pt-2 focus:outline-none">
       {children}
     </AccordionPanel>
   );
@@ -91,14 +92,30 @@ const InputGroup: React.FC<InputGroupProps> = ({
   children,
   id,
 }) => {
+  const [showDescription, setShowDescription] = React.useState(false);
+
+  const handleToggleDescription = () => {
+    setShowDescription((curr) => !curr);
+  };
+
   return (
     <div>
-      <label htmlFor={id} className="block text-xs font-medium text-gray-500">
-        {label}
-      </label>
-      <div className="mt-1">{children}</div>
-      {description && (
-        <p className="mt-2 text-sm text-gray-500">{description}</p>
+      <div className="flex items-center space-x-1">
+        <label htmlFor={id} className="block text-xs font-medium text-gray-500">
+          {label}
+        </label>
+        {description && (
+          <Button
+            onClick={handleToggleDescription}
+            className="w-4 h-4 text-gray-500 appearance-none focus:outline-none"
+          >
+            <FiInfo size={14} />
+          </Button>
+        )}
+      </div>
+      <div className="mt-2">{children}</div>
+      {description && showDescription && (
+        <p className="mt-2 text-xs text-gray-500">{description}</p>
       )}
     </div>
   );
@@ -151,7 +168,11 @@ function Sidebar() {
               Building Information
             </FilterAccordionButton>
             <FilterAccordionPanel>
-              <InputGroup id="street-address" label="Street Address">
+              <InputGroup
+                id="street-address"
+                label="Street Address"
+                description="You enter the address, duh"
+              >
                 <Input
                   id="street-address"
                   placeholder="Enter street address"
