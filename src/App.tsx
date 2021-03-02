@@ -14,6 +14,7 @@ import {
   RiFoldersFill,
   RiCalendarTodoFill,
 } from "react-icons/ri";
+import { Input as ReakitInput, InputProps } from "reakit/Input";
 
 function Header() {
   return (
@@ -47,9 +48,9 @@ const FilterAccordionButton: React.FC<FilterAccordionButtonProps> = ({
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <span>{icon}</span>
-          <span className="text-gray-700 font-medium">{children}</span>
+          <span className="text-gray-700 font-medium text-sm">{children}</span>
         </div>
-        {indicatorIcon}
+        <span className="text-gray-400">{indicatorIcon}</span>
       </div>
     </AccordionButton>
   );
@@ -70,9 +71,52 @@ const FilterGroup: React.FC<FilterGroupProps> = ({ label, children }) => {
   );
 };
 
+const FilterAccordionPanel: React.FC = ({ children }) => {
+  return (
+    <AccordionPanel className="p-4 focus:outline-none">
+      {children}
+    </AccordionPanel>
+  );
+};
+
+interface InputGroupProps {
+  label: React.ReactNode;
+  description?: React.ReactNode;
+  id: string;
+}
+
+const InputGroup: React.FC<InputGroupProps> = ({
+  label,
+  description,
+  children,
+  id,
+}) => {
+  return (
+    <div>
+      <label htmlFor={id} className="block text-xs font-medium text-gray-500">
+        {label}
+      </label>
+      <div className="mt-1">{children}</div>
+      {description && (
+        <p className="mt-2 text-sm text-gray-500">{description}</p>
+      )}
+    </div>
+  );
+};
+
+const Input: React.FC<InputProps> = (props) => {
+  return (
+    <ReakitInput
+      {...props}
+      type="text"
+      className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
+    />
+  );
+};
+
 function Sidebar() {
   return (
-    <aside className="w-72 flex-shrink-0 bg-white border-r border-gray-200">
+    <aside className="w-80 flex-shrink-0 bg-white border-r border-gray-200">
       <div className="p-4 border-b border-gray-100">
         <header className="mb-2">
           <h3 className="text-xs font-semibold tracking-wide text-gray-500 uppercase">
@@ -106,7 +150,14 @@ function Sidebar() {
             <FilterAccordionButton icon={<RiBuilding4Fill />}>
               Building Information
             </FilterAccordionButton>
-            <AccordionPanel>Stuff goes here</AccordionPanel>
+            <FilterAccordionPanel>
+              <InputGroup id="street-address" label="Street Address">
+                <Input
+                  id="street-address"
+                  placeholder="Enter street address"
+                ></Input>
+              </InputGroup>
+            </FilterAccordionPanel>
           </AccordionItem>
           <AccordionItem>
             <FilterAccordionButton icon={<RiFolderUserFill />}>
