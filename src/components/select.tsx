@@ -22,17 +22,21 @@ export const Select: React.FC<SelectProps> = ({ items, ...rest }) => {
     setPopperElement,
   ] = React.useState<HTMLDivElement | null>(null);
 
-  const { styles, attributes } = usePopper(referenceElement, popperElement, {
-    placement: "bottom-start",
-    modifiers: [
-      {
-        name: "offset",
-        options: {
-          offset: [0, 4],
+  const { styles, attributes, forceUpdate } = usePopper(
+    referenceElement,
+    popperElement,
+    {
+      placement: "bottom-start",
+      modifiers: [
+        {
+          name: "offset",
+          options: {
+            offset: [0, 4],
+          },
         },
-      },
-    ],
-  });
+      ],
+    }
+  );
 
   const {
     isOpen,
@@ -47,11 +51,12 @@ export const Select: React.FC<SelectProps> = ({ items, ...rest }) => {
     ...rest,
   });
 
-  // React.useEffect(() => {
-  //   if (isOpen && forceUpdate) {
-  //     forceUpdate();
-  //   }
-  // }, [isOpen, forceUpdate]);
+  // Popper has the wrong position on mount, this hack seems to fix it...
+  React.useEffect(() => {
+    if (isOpen && forceUpdate) {
+      forceUpdate();
+    }
+  }, [isOpen, forceUpdate]);
 
   return (
     <div className="relative" ref={setReferenceElement}>
@@ -73,7 +78,7 @@ export const Select: React.FC<SelectProps> = ({ items, ...rest }) => {
         className={cc([
           "w-full",
           {
-            hidden: !isOpen,
+            "sr-only": !isOpen,
           },
         ])}
         style={styles.popper}
