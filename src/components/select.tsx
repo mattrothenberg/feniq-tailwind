@@ -103,7 +103,7 @@ export const Select: React.FC<SelectProps> = ({ items, ...rest }) => {
         ref={setPopperElement}
         {...attributes.popper}
       >
-        <div className="mt-1 w-full rounded-md bg-white shadow-lg max-h-48">
+        <div className="w-full rounded-md bg-white shadow-lg max-h-48">
           <ul
             className="rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm max-h-48 overflow-auto"
             {...getMenuProps()}
