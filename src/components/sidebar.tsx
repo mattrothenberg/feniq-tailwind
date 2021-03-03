@@ -18,7 +18,10 @@ import { Multiselect } from "./multiselect";
 import { DatePicker, DateRange } from "./datepicker";
 
 export function Sidebar() {
-  const [range, setRange] = React.useState<DateRange>();
+  const [range, setRange] = React.useState<DateRange>({
+    start: undefined,
+    end: undefined,
+  });
   const [selected, setSelected] = React.useState<Option | null>(null);
   const [selectedBoroughs, setSelectedBoroughs] = React.useState<
     Option[] | undefined
@@ -33,7 +36,6 @@ export function Sidebar() {
   };
 
   const handleBoroughChange = (boroughs: Option[] | null | undefined) => {
-    console.log("made it");
     if (boroughs) {
       setSelectedBoroughs(boroughs);
     } else {
@@ -119,8 +121,6 @@ export function Sidebar() {
                   label="Date Range"
                   description="Pick some damn dates..."
                 >
-                  <div>{range?.start?.toLocaleDateString()}</div>
-                  <div>{range?.end?.toLocaleDateString()}</div>
                   <DatePicker range={range} onChange={setRange} />
                 </InputGroup>
               </div>

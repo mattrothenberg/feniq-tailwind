@@ -5,9 +5,9 @@
 @tailwind utilities;
 
 [data-reach-dialog-overlay] {
-  @apply bg-gray-500 bg-opacity-75;
+  @apply bg-gray-500 bg-opacity-75 z-10;
 }
 
 [data-reach-dialog-content] {
-  @apply bg-white rounded-lg shadow-xl max-w-2xl w-full mt-24 mx-auto;
+  @apply bg-white rounded-lg shadow-xl max-w-2xl w-full mt-24 mx-auto p-0;
 }

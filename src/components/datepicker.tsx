@@ -5,7 +5,7 @@ import "react-dates/initialize";
 import moment, { Moment } from "moment";
 import "@reach/dialog/styles.css";
 import "react-dates/lib/css/_datepicker.css";
-import { FiCheck } from "react-icons/fi";
+import { RiCheckFill, RiCloseCircleFill } from "react-icons/ri";
 
 import { Button } from "./button";
 
@@ -15,7 +15,7 @@ export interface DateRange {
 }
 
 interface DatePickerProps {
-  range?: DateRange;
+  range: DateRange;
   onChange: (range: DateRange) => void;
 }
 
@@ -38,30 +38,54 @@ export const DatePicker: React.FC<DatePickerProps> = ({ range, onChange }) => {
     setShowDialog(true);
   }, []);
 
-  console.log({ start, end, focus });
+  const handleConfirm = () => {
+    onChange({ start: start?.toDate(), end: end?.toDate() });
+    setShowDialog(false);
+  };
+
+  const handleClear = () => {
+    onChange({ start: undefined, end: undefined });
+    setStart(null);
+    setEnd(null);
+  };
+
+  const hasRange = range?.start && range?.end;
+
+  console.log("initialized start as", start);
+  console.log("initialized end as", end);
 
   return (
     <React.Fragment>
-      <Button
-        onClick={handleOpen}
-        className="h-10 text-left shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md px-3 text-sm"
-      >
-        {range ? (
-          <React.Fragment>
-            <span>Start</span>
-            <span>End</span>
-          </React.Fragment>
-        ) : (
-          <span className="text-gray-500">Select date range</span>
+      <div className="relative">
+        <Button
+          onClick={handleOpen}
+          className="h-10 text-left shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md px-3 text-sm"
+        >
+          {hasRange ? (
+            <React.Fragment>
+              <span>{range?.start?.toLocaleDateString()}</span>
+              <span> — </span>
+              <span>{range?.end?.toLocaleDateString()}</span>
+            </React.Fragment>
+          ) : (
+            <span className="text-gray-500">Select date range</span>
+          )}
+        </Button>
+        {hasRange && (
+          <div className="absolute inset-y-0 right-0 flex items-center pr-2 z-10">
+            <button onClick={handleClear}>
+              <RiCloseCircleFill className="h-5 w-5 text-gray-400" />
+            </button>
+          </div>
         )}
-      </Button>
+      </div>
       <Dialog
         className="overflow-x-auto"
         aria-label="date-picker-modal"
         isOpen={showDialog}
         onDismiss={handleClose}
       >
-        <div className="space-y-4">
+        <div className="p-6">
           <DayPickerRangeController
             hideKeyboardShortcutsPanel
             keepOpenOnDateSelect
@@ -74,19 +98,17 @@ export const DatePicker: React.FC<DatePickerProps> = ({ range, onChange }) => {
             numberOfMonths={2}
             focusedInput={focus || "startDate"}
             onFocusChange={(newFocus) => {
-              console.log(newFocus);
               setFocus(newFocus);
             }}
             initialVisibleMonth={() => moment().add(3, "M")}
           />
-          <hr className="border-gray-200" />
-          <Button startIcon={<FiCheck />}>Confirm Date Range</Button>
-          <Button startIcon={<FiCheck />} variant="secondary">
-            Confirm Date Range
-          </Button>
-          <Button startIcon={<FiCheck />} variant="white">
-            Confirm Date Range
-          </Button>
+        </div>
+        <div className="p-6 bg-gray-100 border-t border-gray-200">
+          <div className="text-right">
+            <Button onClick={handleConfirm} startIcon={<RiCheckFill />}>
+              Confirm Date Range
+            </Button>
+          </div>
         </div>
       </Dialog>
     </React.Fragment>
