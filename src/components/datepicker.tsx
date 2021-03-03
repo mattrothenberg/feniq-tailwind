@@ -41,12 +41,14 @@ export const DatePicker: React.FC<DatePickerProps> = ({ range, onChange }) => {
   const handleConfirm = () => {
     onChange({ start: start?.toDate(), end: end?.toDate() });
     setShowDialog(false);
+    setFocus(null);
   };
 
   const handleClear = () => {
     onChange({ start: undefined, end: undefined });
     setStart(null);
     setEnd(null);
+    setFocus(null);
   };
 
   const hasRange = range?.start && range?.end;
@@ -72,7 +74,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({ range, onChange }) => {
           )}
         </Button>
         {hasRange && (
-          <div className="absolute inset-y-0 right-0 flex items-center pr-2 z-10">
+          <div className="absolute inset-y-0 right-0 flex items-center pr-2 z-0">
             <button onClick={handleClear}>
               <RiCloseCircleFill className="h-5 w-5 text-gray-400" />
             </button>
