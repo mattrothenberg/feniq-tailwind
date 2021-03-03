@@ -1,5 +1,5 @@
 import React from "react";
-import { FiInfo } from "react-icons/fi";
+import { RiInformationFill } from "react-icons/ri";
 import { Button } from "reakit/Button";
 
 interface InputGroupProps {
@@ -28,9 +28,9 @@ export const InputGroup: React.FC<InputGroupProps> = ({
         {description && (
           <Button
             onClick={handleToggleDescription}
-            className="w-4 h-4 text-gray-500 appearance-none focus:outline-none"
+            className="w-4 h-4 text-gray-400 appearance-none focus:outline-none"
           >
-            <FiInfo size={14} />
+            <RiInformationFill size={14} />
           </Button>
         )}
       </div>

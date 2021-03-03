@@ -5,6 +5,7 @@
   "dependencies": {
     "@popperjs/core": "^2.9.0",
     "@reach/accordion": "^0.13.2",
+    "@reach/checkbox": "^0.13.2",
     "@reach/dialog": "^0.13.2",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",

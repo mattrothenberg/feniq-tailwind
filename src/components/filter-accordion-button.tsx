@@ -1,6 +1,6 @@
 import React from "react";
 import { AccordionButton, useAccordionItemContext } from "@reach/accordion";
-import { FiChevronDown, FiChevronUp } from "react-icons/fi";
+import { RiArrowDownSLine, RiArrowUpSLine } from "react-icons/ri";
 
 interface FilterAccordionButtonProps {
   icon?: React.ReactNode;
@@ -11,9 +11,9 @@ export const FilterAccordionButton: React.FC<FilterAccordionButtonProps> = ({
 }) => {
   const context = useAccordionItemContext();
   const indicatorIcon = context.isExpanded ? (
-    <FiChevronUp />
+    <RiArrowUpSLine />
   ) : (
-    <FiChevronDown />
+    <RiArrowDownSLine />
   );
 
   return (

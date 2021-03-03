@@ -45,7 +45,7 @@ export function Sidebar() {
 
   return (
     <aside className="w-80 flex-shrink-0 bg-white border-r border-gray-200 overflow-auto">
-      <div className="p-4 border-b border-gray-100">
+      <div className="p-4 border-b border-gray-200">
         <header className="mb-2">
           <h3 className="text-xs font-semibold tracking-wide text-gray-500 uppercase">
             Applied Filters
