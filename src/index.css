@@ -3,3 +3,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+[data-reach-dialog-overlay] {
+  @apply bg-gray-500 bg-opacity-75;
+}
+
+[data-reach-dialog-content] {
+  @apply bg-white rounded-lg shadow-xl max-w-2xl w-full mt-24 mx-auto;
+}

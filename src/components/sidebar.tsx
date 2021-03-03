@@ -15,8 +15,10 @@ import { Badge } from "./badge";
 import { Select, Option } from "./select";
 import { BOOLEAN_SELECT_OPTIONS, BOROUGH_SELECT_OPTIONS } from "../lib";
 import { Multiselect } from "./multiselect";
+import { DatePicker, DateRange } from "./datepicker";
 
 export function Sidebar() {
+  const [range, setRange] = React.useState<DateRange>();
   const [selected, setSelected] = React.useState<Option | null>(null);
   const [selectedBoroughs, setSelectedBoroughs] = React.useState<
     Option[] | undefined
@@ -111,6 +113,15 @@ export function Sidebar() {
                     }}
                     items={BOROUGH_SELECT_OPTIONS}
                   />
+                </InputGroup>
+                <InputGroup
+                  id="date"
+                  label="Date Range"
+                  description="Pick some damn dates..."
+                >
+                  <div>{range?.start?.toLocaleDateString()}</div>
+                  <div>{range?.end?.toLocaleDateString()}</div>
+                  <DatePicker range={range} onChange={setRange} />
                 </InputGroup>
               </div>
             </FilterAccordionPanel>
