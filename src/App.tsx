@@ -9,9 +9,9 @@ function App() {
   return (
     <div className="h-screen flex flex-col overflow-hidden">
       <Header />
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 bg-gray-50 flex overflow-hidden">
         <Sidebar />
-        <main className="flex-1">
+        <main className="flex-1 flex flex-col h-full min-w-0">
           <Results />
         </main>
       </div>
